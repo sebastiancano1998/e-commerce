@@ -5,16 +5,15 @@ import SideMenu from "../components/SideMenu";
 import { useState } from 'react';
 import Cart from "../../public/assets/icons/icon_shopping_cart.svg"
 import LoginButton from '../atoms/Buttons/LoginButton';
+import NavToggle from '../atoms/NavBar/NavToggle';
 
 const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
   return (
     <div className="w-full flex fixed z-10 bg-white justify-between h-20 border-slate-300  text-lpink text-sm ">
-      <div className="md:hidden self-center ml-4">
-        <img className="absolute z-50 hover:cursor-pointer translate-y-7 top-0" src={Menu} onClick={() => setToggleMenu(!toggleMenu)}></img>
-      </div>
-      {toggleMenu && <SideMenu></SideMenu>}
-      <div className="self-center ml-12 hover:cursor-pointer">
+      <NavToggle toggle={()=> setToggleMenu(!toggleMenu)}></NavToggle>
+      <SideMenu toggle={toggleMenu}></SideMenu>
+      <div className="self-center hover:cursor-pointer md:ml-4">
         <img src={Logo} ></img>
       </div>
       <div className="hidden self-center gap-3 md:flex text-sm">

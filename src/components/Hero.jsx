@@ -7,7 +7,7 @@ const Hero = () => {
     <div className="flex w-full pt-20">
       <div className=" w-11/12 m-auto py-20 flex flex-col justify-center items-center  gap-12 sm:py-40 xl:w-1/2  ">
         <div className="self-center px-10 xl:px-0 ">
-          <h1 className='text-black text-medium  xl:text-start xl:pl-12  lg:text-6xl xl:text-5xl  sm:text-5xl text-center after:content-["everything\00a0you\00a0want"] after:text-p1'>
+          <h1 className='text-black text-medium  xl:text-start xl:pl-12  lg:text-6xl xl:text-5xl  sm:text-5xl text-center after:content-["everything\00a0you\00a0want"] after:text-p2'>
             A place where you can find&nbsp;
           </h1>
         </div>
