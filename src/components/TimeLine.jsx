@@ -48,7 +48,7 @@ const Tracking = () => {
           Track your order wherever you are on any device.
         </p>
       </div>
-      <div className="w-full sm:w-4/5  lg:w-3/5 xl:w-2/5 flex flex-col relative my-10 gap-10 after:bg-p2 after:absolute after:w-0.2 after:h-full after:left-timeline">
+      <div className="w-full sm:w-8/12  lg:w-1/2 xl:w-2/5 flex flex-col relative my-10 gap-10 after:bg-p2 after:absolute after:w-0.2 after:h-full after:left-timeline">
         {items.map(({ title, description, icon }, index) => {
           return (
             <TimeLineItem
