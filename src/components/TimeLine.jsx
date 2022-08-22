@@ -15,7 +15,7 @@ const Tracking = () => {
     },
     {
       title: "Facturación",
-      description: "Se genera el pedido en tienda",
+      description: "Se genera la boleta de venta en tienda.",
       icon: <RiBillLine />,
     },
     {
@@ -36,19 +36,19 @@ const Tracking = () => {
     },
   ];
   return (
-    <div className="bg-white w-full flex flex-col items-center py-16">
+    <div className="bg-white w-full justify-center flex flex-col  lg:flex-row items-center py-16">
       <div className="text-center relative text-p2">
         <div className="flex justify-center gap-2">
-        <p className='text-3xl uppercase font-bold'>
+        <p className='text-3xl uppercase font-bold lg:text-5xl'>
           Tracking
         </p>
         <span className="w-4 h-4 rounded-full bg-white border-p2 border-2 animate-ping"></span>
         </div>        
-        <p className="text-sm px-2 py-4">
+        <p className="text-sm px-2 py-4 lg:text-base">
           Track your order wherever you are on any device.
         </p>
       </div>
-      <div className="w-full sm:w-8/12  lg:w-1/2 xl:w-2/5 flex flex-col relative my-10 gap-10 after:bg-p2 after:absolute after:w-0.2 after:h-full after:left-timeline">
+      <div className="w-full lg:w-1/2 flex flex-col relative my-10 gap-10 after:bg-p2 after:absolute after:w-0.2 after:h-full after:left-timeline">
         {items.map(({ title, description, icon }, index) => {
           return (
             <TimeLineItem
