@@ -12,12 +12,6 @@ module.exports = {
     extend: {
       colors: {
         ...colors,
-        "hgreen": "#ACD9B2",
-        "dark": "#232830",
-        "lpink": "#C7C7C7",
-        "white": "#FFFFFF",
-        "black": "#000000",
-        "input": "#F7F7F7",
         "p1": "#54BAB9",
         "p2": "#18978F",
         "p3": "#E9DAC1",
@@ -25,7 +19,33 @@ module.exports = {
       },
       fontSize: {
         "medium": "1.50rem",
+      },
+      translate: {
+        "3/5": "60%",
+        
+      },
+      inset: {
+        "45": "45%",
+        "0.9": "0.9rem",
+        "even-circle": "-7px",
+        "odd-circle": "-9px",
+        "timeline": "49.5%",
+      },
+      padding: {
+        "1.4": "1.4rem",
+      },
+      width: {
+        "0.2":"0.2rem",
+      },
+      zIndex: {
+        "1": "1",
+      },
+      boxShadow: {
+        "shadow1": "0px 0px 15px -3px rgba(0,0,0,0.05),19px 10px 15px -3px rgba(0,0,0,0.05),-8px 10px 15px -3px rgba(0,0,0,0.05),0px -4px 50px -3px rgba(0,0,0,0.05)",
+        "evenshadow":"1px -1px 1px rgba(0,0,0,0.05)",
+        "oddshadow":"-1px 1px 1px rgba(0,0,0,0.05)"
       }
+
     },
   },
   plugins: [],
