@@ -15,8 +15,8 @@ const Objetives = () => {
   ]
 
   return (
-    <div className='flex flex-col sm:px-8  pt-12  w-4/5 m-auto p-auto'>
-      <p className='self-start text-p1 font-bold text-3xl uppercase'>Why us?</p>
+    <div className='flex flex-col px-8 bg-p2 py-12 xl:px-24 text-white w-full'>
+      <p className='self-start font-bold text-3xl uppercase'>Why us?</p>
     <div className="py-10 flex flex-col gap-6 items-baseline  sm:grid sm:grid-cols-2 xl:grid-cols-4">
       {ObjetivesItem.map(({id, title, subtitle, icon})=>{
         return (

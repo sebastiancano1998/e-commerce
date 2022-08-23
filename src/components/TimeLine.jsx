@@ -39,12 +39,12 @@ const Tracking = () => {
     <div className="bg-white w-full justify-center flex flex-col  lg:flex-row items-center py-16">
       <div className="text-center relative text-p2">
         <div className="flex justify-center gap-2">
-        <p className='text-3xl uppercase font-bold lg:text-5xl'>
+        <p className='text-3xl uppercase font-bold sm:text-5xl'>
           Tracking
         </p>
         <span className="w-4 h-4 rounded-full bg-white border-p2 border-2 animate-ping"></span>
         </div>        
-        <p className="text-sm px-2 py-4 lg:text-base">
+        <p className="text-sm px-2 py-4 sm:text-base">
           Track your order wherever you are on any device.
         </p>
       </div>

@@ -11,9 +11,9 @@ const Home = () => {
     <div className='overflow-hidden'>
     <Navbar></Navbar>
     <Hero></Hero>
-    <AboutUs></AboutUs>
+    <Objetives></Objetives>  
     <TimeLine></TimeLine>
-    <Objetives></Objetives>
+    <AboutUs></AboutUs>
     <TypeProducts></TypeProducts>
     </div>
   )

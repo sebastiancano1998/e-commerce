@@ -4,7 +4,7 @@ const colors = require('tailwindcss/colors')
 module.exports = {
   content: [
     "./src/atoms/**/*.{js,ts,jsx,tsx}",
-    "./src/pages/**/*.{js,ts,jsx,tsx}",
+    "./src/templates/**/*.{js,ts,jsx,tsx}",
     "./src/components/**/*.{js,ts,jsx,tsx}",
     "./src/containers/**/*.{js,ts,jsx,tsx}"//aca se añaden las rutas de donde provienen los archivos que queremos estilizar con tailwindcss
   ],
@@ -16,6 +16,8 @@ module.exports = {
         "p2": "#18978F",
         "p3": "#E9DAC1",
         "p4": "#F7ECDE",
+        "p5": "rgba(0, 0, 0, .6)",
+        "modal": "rgba(0, 0, 0, .5)",
       },
       fontSize: {
         "medium": "1.50rem",
@@ -41,6 +43,7 @@ module.exports = {
         "1": "1",
       },
       maxWidth: {
+        "150": "150px",
         "220":"220px",
       },
       boxShadow: {
