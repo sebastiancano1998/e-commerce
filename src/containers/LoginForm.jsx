@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import LoginButton from "../atoms/Buttons/LoginButton";
-import {Link} from "react-router-dom"
+import {Link} from "react-router-dom";
 const LoginForm = () => {
   const [form, setForm] = useState({
     email: "",
@@ -21,9 +21,9 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="flex flex-col bg-white items-center text-p5 w-11/12 m-auto max-w-sm p-4">
-      <div className=" flex my-8 items-center">
-        <p className=" text-p2 text-2xl font-semibold">Log in</p>
+    <div className="flex flex-col bg-white sm:pt-24 items-center rounded-xl text-p5 w-11/12  max-w-sm p-2">
+      <div className=" flex my-8  gap-2">
+        <p className=" text-p5 text-4xl font-semibold after:content-['sesión.'] after:text-p2">Inicia </p>
       </div>
       <form
         onSubmit={handleSubmit}
@@ -36,7 +36,7 @@ const LoginForm = () => {
           value={form.email}
           onChange={handleChange}
           placeholder="Email"
-          className=" border-2  rounded-md h-12 p-2 w-full outline-p2"
+          className=" border-2 border-p2  rounded-md h-12 p-2 w-full outline-p6"
         ></input>
         <input
           type="password"
@@ -45,7 +45,7 @@ const LoginForm = () => {
           value={form.password}
           onChange={handleChange}
           placeholder="Password"
-          className=" border-2    rounded-md h-12 p-2 w-full  outline-p2"
+          className=" border-2 border-p2  rounded-md h-12 p-2 w-full  outline-p6 "
         ></input>
         <p className="self-end text-p2 text-sm hover:underline">
             <Link to="">

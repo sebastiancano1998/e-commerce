@@ -1,10 +1,10 @@
 import React from 'react'
-import AboutUs from '../components/AboutUs'
-import Objetives from '../components/Objetives'
+import AboutUs from '../containers/AboutUs'
+import Objetives from '../containers/Objetives'
 import Navbar from '../containers/Navbar'
-import Hero from '../components/Hero'
-import TypeProducts from '../components/TypeProducts'
-import TimeLine from '../components/TimeLine'
+import Hero from '../containers/Hero'
+import TypeProducts from '../containers/TypeProducts'
+import TimeLine from '../containers/TimeLine'
 
 const Home = () => {
   return (

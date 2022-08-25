@@ -3,7 +3,7 @@ import { TbTruckDelivery } from 'react-icons/Tb';
 import { MdOutlineChangeCircle } from 'react-icons/Md';
 import { BsCartCheckFill } from 'react-icons/Bs';
 import { MdOutlineSystemSecurityUpdateGood } from 'react-icons/Md';
-import ObjetiveItem from '../atoms/Objetives/ObjetiveItem';
+import ObjetiveItem from '../components/ObjetiveItem';
 const Objetives = () => {
 
   const ObjetivesItem = [

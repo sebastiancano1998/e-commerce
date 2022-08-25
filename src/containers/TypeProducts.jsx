@@ -1,5 +1,5 @@
 import React from "react";
-import TyProductItem from "../atoms/TypeProducts/TyProductItem";
+import TyProductItem from "../components/TyProductItem";
 
 import useGetCategories from "../hooks/useGetCategories";
 

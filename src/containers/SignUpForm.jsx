@@ -1,10 +1,12 @@
 import React from "react";
 import { useState } from "react";
 import CreateAccountButton from "../atoms/Buttons/CreateAccountButton";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 
 const SignupForm = () => {
   const [form, setForm] = useState({
+    nombre: "",
+    apellido:"",
     email: "",
     password: "",
     repassword: "",
@@ -30,14 +32,33 @@ const SignupForm = () => {
   };
   console.log(form);
   return (
-    <div className="flex flex-col bg-white items-center text-p5 w-11/12 m-auto max-w-sm p-4">
-      <div className=" flex my-8 items-center">
-        <p className=" text-p2 text-2xl font-semibold">Sign up</p>
+    <div className="flex flex-col rounded-xl sm:pt-24  items-center text-p5 w-11/12  max-w-sm p-2">
+      <div className=" flex my-8  gap-2">
+        <p className=" text-4xl font-semibold after:content-['cuenta.'] after:text-p2">Crea una </p>
       </div>
       <form
         onSubmit={handleSubmit}
         className="flex flex-col items-center gap-4 w-full"
-      >
+      > 
+      
+      <input
+          type="text"
+          id="nombre"
+          name="nombre"
+          value={form.nombre}
+          onChange={handleChange}
+          placeholder="Nombre"
+          className=" border-2 border-p2 rounded-md h-12 p-2 w-full  outline-p6"
+        ></input>
+        <input
+          type="text"
+          id="apellido"
+          name="apellido"
+          value={form.apellido}
+          onChange={handleChange}
+          placeholder="Apellido"
+          className=" border-2 border-p2 rounded-md h-12 p-2 w-full  outline-p6"
+        ></input>
         <input
           type="text"
           id="email"
@@ -45,7 +66,7 @@ const SignupForm = () => {
           value={form.email}
           onChange={handleChange}
           placeholder="Email"
-          className=" border-2  rounded-md h-12 p-2 w-full outline-p2"
+          className=" border-2 border-p2  rounded-md h-12 p-2 w-full  outline-p6"
         ></input>
         <input
           type="password"
@@ -54,7 +75,7 @@ const SignupForm = () => {
           value={form.password}
           onChange={handleChange}
           placeholder="Password"
-          className=" border-2    rounded-md h-12 p-2 w-full  outline-p2"
+          className=" border-2 border-p2  rounded-md h-12 p-2 w-full   outline-p6"
         ></input>
         <input
           type="password"
@@ -63,10 +84,12 @@ const SignupForm = () => {
           value={form.repassword}
           onChange={handleChange}
           placeholder="Confirm password"
-          className="border-2   rounded-md h-12 p-2 w-full outline-p2"
+          className="border-2 border-p2  rounded-md h-12 p-2 w-full  outline-p6"
         ></input>
         <div className="flex flex-row-reverse gap-2 self-baseline">
-          <label htmlFor="terminos"className="text-sm" >Acepto términos y condiciones.</label>
+          <label htmlFor="terminos" className="text-sm">
+            Acepto términos y condiciones.
+          </label>
           <input
             type="checkbox"
             id="terminos"

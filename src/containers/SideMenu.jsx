@@ -1,6 +1,6 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import SideMenuItem from "../atoms/SideMenu/SideMenuItem";
+import SideMenuItem from "../components/SideMenuItem";
 
 const SideMenu = ({ toggle }) => {
   const Items = [

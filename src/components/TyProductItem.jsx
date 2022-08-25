@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import SeeMoreButton from "../Buttons/SeeMoreButton";
+import SeeMoreButton from "../atoms/Buttons/SeeMoreButton";
 
 const TyProductItem = ({ name, image }) => {
   return (

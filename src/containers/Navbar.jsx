@@ -1,10 +1,11 @@
 import React from 'react';
 import Logo from '../../public/assets/logos/logo_yard_sale.svg'; 
-import SideMenu from "../components/SideMenu";
+import SideMenu from "./SideMenu";
 import { useState } from 'react';
 import Cart from "../../public/assets/icons/icon_shopping_cart.svg"
-import NavToggle from '../atoms/NavBar/NavToggle';
+import NavToggle from '../atoms/Toggles/NavToggle';
 import LoginButton from '../atoms/Buttons/LoginButton';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
@@ -19,13 +20,13 @@ const Navbar = () => {
       <div className="hidden self-center gap-3 md:flex text-sm">
         <ul className="text-lpink flex gap-3 items-center text-p5 ">
           <li className=" text-p1 rounded border border-p1 p-1">
-            <a href="">Home</a>
+            <Link to="/">Home</Link>
           </li>
           <li className="hover:text-p1">
-            <a href="">Store</a>
+            <Link to="/store">Store</Link>
           </li>
           <li className="hover:text-p1">
-            <a href="">Contacto</a>
+            <Link to="/">Contacto</Link>
           </li>
         </ul>
       </div>

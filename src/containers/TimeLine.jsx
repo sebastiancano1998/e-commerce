@@ -1,5 +1,5 @@
 import React from "react";
-import TimeLineItem from "../atoms/TimeLine/TimeLineItem";
+import TimeLineItem from "../components/TimeLineItem";
 import { FaTshirt } from "react-icons/Fa";
 import { RiBillLine } from "react-icons/Ri";
 import { BsBoxSeam } from "react-icons/Bs";

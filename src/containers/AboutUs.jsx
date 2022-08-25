@@ -1,5 +1,5 @@
 import React from 'react';
-import MemberTeam from '../atoms/AboutsUs/MemberTeam';
+import MemberItem from '../components/MemberItem';
 
 const AboutUs = () => {
   const users = [
@@ -14,7 +14,7 @@ const AboutUs = () => {
       <div className='flex flex-col  w-4/5 gap-12 sm:grid sm:grid-cols-2 lg:grid-cols-4 py-12 '>
       {users.map(({ id, name, role, avatar }) => {
         return (
-          <MemberTeam key={id} name={name} role={role} avatar={avatar}></MemberTeam>
+          <MemberItem key={id} name={name} role={role} avatar={avatar}></MemberItem>
         );
       })}
       </div>

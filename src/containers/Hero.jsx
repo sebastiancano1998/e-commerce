@@ -16,7 +16,7 @@ const Hero = () => {
         <p className="text-lpink text-sm  xl:text-start   text-center sm:text-base sm:px-12">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident cumque, consequatur odit omnis soluta iusto debitis rerum maiores reiciendis fugit, reprehenderit veritatis?
         </p>
-        <div className=" flex gap-4 max-w-xs  items-center justify-center w-full xl:self-start xl:pl-12">
+        <div className=" flex gap-4 max-w-xs  items-center justify-center w-3/4 xl:self-start xl:pl-12">
           <LoginButton></LoginButton>
           <SignupButton></SignupButton>
         </div>
