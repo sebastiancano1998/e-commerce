@@ -1,6 +1,6 @@
 import React from "react";
 import {BsGithub, BsLinkedin, BsInstagram} from "react-icons/Bs"
-const MemberTeam = ({avatar, role, name}) => {
+const MemberItem= ({avatar, role, name}) => {
   return (
     <div className="flex flex-col gap-4 text-center items-center">
       <div >
@@ -35,4 +35,4 @@ const MemberTeam = ({avatar, role, name}) => {
   );
 };
 
-export default MemberTeam;
+export default MemberItem;

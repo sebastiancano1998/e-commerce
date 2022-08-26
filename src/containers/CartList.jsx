@@ -13,9 +13,17 @@ const CartList = () => {
   const dispatch = useDispatch();
   const { cart } = state.cart;
 
+  const calcularTotal = () => {
+    const reducer = (accumulator, currentValue) =>
+      accumulator + currentValue.price * currentValue.cantidad;
+    const sum = cart.reduce(reducer, 0).toFixed(2);
+    return sum;
+  };
+
   return (
     <div>
       <h2>CartList</h2>
+      <p>Total:${calcularTotal()}</p>
       {cart.map((item) => {
         return (
           <CartItem

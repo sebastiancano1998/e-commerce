@@ -8,14 +8,14 @@ import {
 
 export const initialState = {
   products: [
-    { id: 1, name: "Producto1", price: "10" },
-    { id: 2, name: "Producto2", price: "20" },
-    { id: 3, name: "Producto3", price: "30" },
-    { id: 4, name: "Producto4", price: "40" },
-    { id: 5, name: "Producto5", price: "50" },
-    { id: 6, name: "Producto6", price: "60" },
-    { id: 7, name: "Producto7", price: "70" },
-    { id: 8, name: "Producto8", price: "80" },
+    { id: 1, name: "Producto1", price: "10", image:"assets/products/keyboard.jpg" },
+    { id: 2, name: "Producto2", price: "20", image:"assets/products/keyboard.jpg" },
+    { id: 3, name: "Producto3", price: "30", image:"assets/products/keyboard.jpg" },
+    { id: 4, name: "Producto4", price: "40", image:"assets/products/keyboard.jpg" },
+    { id: 5, name: "Producto5", price: "50", image:"assets/products/keyboard.jpg" },
+    { id: 6, name: "Producto6", price: "60", image:"assets/products/keyboard.jpg" },
+    { id: 7, name: "Producto7", price: "70", image:"assets/products/keyboard.jpg" },
+    { id: 8, name: "Producto8", price: "80", image:"assets/products/keyboard.jpg" },
   ],
   cart: [],
 };
@@ -59,7 +59,7 @@ export default function cartReducer(state = initialState, action) {
                   cantidad: item.cantidad + action.payload[0],
                 }
               : item // mientras que los items que son false osea q no cumple la condicion se les deja tal y como esta
-        ), 
+        ),
       };
     }
     case DECREMENT: {
@@ -79,7 +79,7 @@ export default function cartReducer(state = initialState, action) {
                   : item // se le deja a los items q no cumplen tal y como estan
             ),
           }
-        : { ...state }; // en caso de que la cantidad sea menor que 1 simplemente devolvemos el mismo state sin modificaciones.
+        : { ...state, cart: state.cart }; // en caso de que la cantidad sea menor que 1 simplemente devolvemos el mismo state sin modificaciones.
     }
     case CLEAR_CART: {
       return {

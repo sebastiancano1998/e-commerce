@@ -28,9 +28,9 @@ const ProductList = () => {
     dispatch({type: TYPES.DECREMENT, payload: [value,id]})
   };*/
   return (
-    <div>
-      <h1>ProductList</h1>
-      <article>
+    <div className=" w-11/12 m-auto ">
+      <p className="text-p2 font-semibold text-3xl text-center my-4">Products</p>
+      <section className="grid grid-cols-2 gap-2">
         {products.map((product) => {
           return (
             <ProductItem
@@ -40,7 +40,7 @@ const ProductList = () => {
             ></ProductItem>
           );
         })}
-      </article>
+      </section>
     </div>
   );
 };
