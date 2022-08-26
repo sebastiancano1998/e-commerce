@@ -34,11 +34,9 @@ export default function cartReducer(state = initialState, action) {
           };
     }
     case REMOVE_FROM_CART: {
-      let newCart = [...state.cart];
-      newCart.splice(action.payload, 1);
       return {
         ...state,
-        cart: newCart,
+        cart: state.cart.filter((item)=> item.id!==action.payload) //devuelve todos los items que tengan un item.id diferente al de action.payload
       };
     }
     case INCREMENT: {

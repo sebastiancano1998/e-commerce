@@ -16,13 +16,12 @@ const CartList = () => {
   return (
     <div>
       <h2>CartList</h2>
-      {cart.map((item, index) => {
+      {cart.map((item) => {
         return (
           <CartItem
-            key={index}
+            key={item.id}
             data={item}
-            indexValue={index}
-            removeFromCart={() => dispatch(removeFromCart(index))}
+            removeFromCart={() => dispatch(removeFromCart(item.id))}
             incrementCant={() => dispatch(incrementCant(1, item.id))}
             decrementCant={() => dispatch(decrementCant(1, item.id))}
           ></CartItem>
