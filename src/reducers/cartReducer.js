@@ -1,4 +1,10 @@
-import { ADD_TO_CART, CLEAR_CART, DECREMENT, INCREMENT, REMOVE_FROM_CART } from "../types";
+import {
+  ADD_TO_CART,
+  CLEAR_CART,
+  DECREMENT,
+  INCREMENT,
+  REMOVE_FROM_CART,
+} from "../types";
 
 export const initialState = {
   products: [
@@ -36,38 +42,44 @@ export default function cartReducer(state = initialState, action) {
     case REMOVE_FROM_CART: {
       return {
         ...state,
-        cart: state.cart.filter((item)=> item.id!==action.payload) //devuelve todos los items que tengan un item.id diferente al de action.payload
+        cart: state.cart.filter((item) => item.id !== action.payload), //devuelve todos los items que tengan un item.id diferente al de action.payload
       };
     }
     case INCREMENT: {
       return {
         ...state,
-        cart: state.cart.map((item) =>
-          item.id === action.payload[1]
-            ? {
-                //hacemos el mapeo y cuando el item.id coincida con el el action.payload entonces haz una copia de la info de ese item, pero que en su propiedad cantidad le sume el valor que trae el payload
-                ...item,
-                cantidad: item.cantidad + action.payload[0],
-              }
-            : item
-        ), // caso contrario devuelve ese mismo item sin modificaciones
+        cart: state.cart.map(
+          (
+            item //se hace un mapeo donde al item con id igual al de action payload se le asignara true mientras que a los que no se les asignara false
+          ) =>
+            item.id === action.payload[1] // lo que hacemos es mediante una condicional ternaria al item que sea true osea que cumple la condicion se le va a asignar un nuevo valor que es una copia de el mismo pero con la cantidad modificada de acuerdo al action.payload
+              ? {
+                  //hacemos el mapeo y cuando el item.id coincida con el el action.payload entonces haz una copia de la info de ese item, pero que en su propiedad cantidad le sume el valor que trae el payload
+                  ...item,
+                  cantidad: item.cantidad + action.payload[0],
+                }
+              : item // mientras que los items que son false osea q no cumple la condicion se les deja tal y como esta
+        ), 
       };
     }
     case DECREMENT: {
-      return {
-        ...state,
-        cart: state.cart.map((item) =>
-          (item.id === action.payload[1])
-            ? (item.cantidad > 1)
-              ? { // para disminuir hacemos una validacion para que solo se pueda disminuir si es que la cantidad es mayor a 1
-                  //hacemos el mapeo y cuando el item.id coincida con el el action.payload entonces haz una copia de la info de ese item, pero que en su propiedad cantidad le sume el valor que trae el payload
-                  ...item,
-                  cantidad: item.cantidad - action.payload[0],
-                }
-              : item
-            : item // caso contrario devuelve ese mismo item sin modificaciones
-        ), 
-      };
+      let itemToDecrement = state.cart.find(
+        (item) => item.id === action.payload[1]
+      );
+
+      return itemToDecrement.cantidad > 1
+        ? {
+            ...state,
+            cart: state.cart.map(
+              (
+                item //se hace un mapeo donde al item con id igual al de action payload se le asignara true mientras que a los que no se les asignara false
+              ) =>
+                item.id === action.payload[1] // lo que hacemos es mediante una condicional ternaria al item que sea true osea que cumple la condicion se le va a asignar un nuevo valor que es una copia de el mismo pero con la cantidad modificada de acuerdo al action.payload
+                  ? { ...item, cantidad: item.cantidad - action.payload[0] } // mientras que los items que son false osea q no cumple la condicion se les deja tal y como esta
+                  : item // se le deja a los items q no cumplen tal y como estan
+            ),
+          }
+        : { ...state }; // en caso de que la cantidad sea menor que 1 simplemente devolvemos el mismo state sin modificaciones.
     }
     case CLEAR_CART: {
       return {
