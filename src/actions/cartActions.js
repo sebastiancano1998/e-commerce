@@ -6,7 +6,7 @@ import {
   REMOVE_FROM_CART,
 } from "../types";
 
-export const addToCart = (id) => ({ type: ADD_TO_CART, payload: id });
+export const addToCart = (product) => ({ type: ADD_TO_CART, payload: product });
 export const removeFromCart = (id) => ({ type: REMOVE_FROM_CART, payload: id });
 export const incrementCant = (value, id) => ({
   type: INCREMENT,

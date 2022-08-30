@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const useGetCategories = (API) => {
+const useGetAllProducts= (API) => {
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -16,4 +16,4 @@ const useGetCategories = (API) => {
   return [categories, isLoading];
 };
 
-export default useGetCategories;
+export default useGetAllProducts;

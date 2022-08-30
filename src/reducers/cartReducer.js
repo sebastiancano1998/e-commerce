@@ -7,28 +7,13 @@ import {
 } from "../types";
 
 export const initialState = {
-  products: [
-    { id: 1, name: "Producto1", price: "10", image:"assets/products/keyboard.jpg" },
-    { id: 2, name: "Producto2", price: "20", image:"assets/products/keyboard.jpg" },
-    { id: 3, name: "Producto3", price: "30", image:"assets/products/keyboard.jpg" },
-    { id: 4, name: "Producto4", price: "40", image:"assets/products/keyboard.jpg" },
-    { id: 5, name: "Producto5", price: "50", image:"assets/products/keyboard.jpg" },
-    { id: 6, name: "Producto6", price: "60", image:"assets/products/keyboard.jpg" },
-    { id: 7, name: "Producto7", price: "70", image:"assets/products/keyboard.jpg" },
-    { id: 8, name: "Producto8", price: "80", image:"assets/products/keyboard.jpg" },
-  ],
   cart: [],
 };
 
 export default function cartReducer(state = initialState, action) {
   switch (action.type) {
     case ADD_TO_CART: {
-      let newItem = state.products.find(
-        (product) => product.id === action.payload
-      );
-      console.log(state.cart);
-      let itemInCart = state.cart.find((item) => item.id === newItem.id);
-
+      let itemInCart = state.cart.find((item) => item.id === action.payload.id);
       return itemInCart
         ? {
             ...state,
@@ -36,7 +21,7 @@ export default function cartReducer(state = initialState, action) {
           }
         : {
             ...state,
-            cart: [...state.cart, { ...newItem, cantidad: 1 }],
+            cart: [...state.cart, { ...action.payload, cantidad: 1 }],
           };
     }
     case REMOVE_FROM_CART: {
