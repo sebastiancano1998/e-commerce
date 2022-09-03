@@ -1,13 +1,23 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import SideMenuItem from "../components/SideMenuItem";
+import { useDispatch } from "react-redux";
+import {useNavigate} from "react-router-dom"
+import {Link} from "react-router-dom"
+
 
 const SideMenu = ({ toggle }) => {
   const Items = [
-    { id: 1, name: "Home", path:"/" },
-    { id: 2, name: "Store", path:"/Store"},
-    { id: 3, name: "Contacto", path:"/Contacto" },
+    { id: 1, name: "Home", path: "/" },
+    { id: 2, name: "Store", path: "/Store" },
+    { id: 3, name: "Contacto", path: "/Contacto" },
   ];
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+  const handleAuth = () => {
+      navigate("/")
+  }
+
 
   return (
     <AnimatePresence>
@@ -24,27 +34,33 @@ const SideMenu = ({ toggle }) => {
               Servicios
             </p>
             {Items.map(({ id, name, path }) => {
-              return <SideMenuItem key={id} keyword={name} path={path}></SideMenuItem>;
+              return (
+                <SideMenuItem
+                  key={id}
+                  keyword={name}
+                  path={path}
+                ></SideMenuItem>
+              );
             })}
             <br></br>
-            <li>
-              <a href="" className="hover:text-p2">
-                My orders
-              </a>
-            </li>
-            <li>
-              <a href="" className="hover:text-p2">
-                My account
-              </a>
-            </li>
-            <li>
-              <p className="font-medium">sebscandota@gmail.com</p>
-            </li>
-            <li>
-              <a href="" className="text-p2">
-                Sign out
-              </a>
-            </li>
+                <li>
+                  <a href="" className="hover:text-p2">
+                    My orders
+                  </a>
+                </li>
+                <li>
+                <Link to="/userdetails" className="hover:text-p2">
+                    My account
+                  </Link>
+                </li>
+                <li>
+                  <p className="font-medium">{currentUser.email}</p>
+                </li>
+                <li>
+                  <button  className="text-p2" onClick={()=> handleAuth()}>
+                    Sign out
+                  </button>
+                </li>
           </ul>
         </motion.div>
       )}

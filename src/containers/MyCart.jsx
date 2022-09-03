@@ -52,7 +52,7 @@ const MyCart = ({ toggle, toggleValue }) => {
                 className="text-2xl text-p5 hover:cursor-pointer"
                 onClick={() => toggle()}
               />
-              <p className="font-semibold">My Cart</p>
+              <p className="font-semibold text-base">My Cart</p>
             </div>
             {cart.length > 0 ? (
               <>

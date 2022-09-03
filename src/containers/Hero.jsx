@@ -1,10 +1,11 @@
-import React from 'react';
-import HeroCard from '../../public/assets/logos/hero-card.jpeg'
-import LoginButton from '../atoms/Buttons/LoginButton';
-import SignupButton from '../atoms/Buttons/SignupButton';
-
+import React from "react";
+import { useSelector } from "react-redux";
+import HeroCard from "../../public/assets/logos/hero-card.jpeg";
+import LoginButton from "../atoms/Buttons/LoginButton";
+import SignupButton from "../atoms/Buttons/SignupButton";
 
 const Hero = () => {
+
   return (
     <div className="flex w-full pt-20 text-p5">
       <div className=" w-11/12 m-auto py-20 flex flex-col justify-center items-center  gap-12 sm:py-40 xl:w-1/2  ">
@@ -14,12 +15,11 @@ const Hero = () => {
           </h1>
         </div>
         <p className="text-lpink text-sm  xl:text-start   text-center sm:text-base sm:px-12">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident cumque, consequatur odit omnis soluta iusto debitis rerum maiores reiciendis fugit, reprehenderit veritatis?
         </p>
-        <div className=" flex gap-4 max-w-xs  items-center justify-center w-3/4 xl:self-start xl:pl-12">
-          <LoginButton></LoginButton>
-          <SignupButton></SignupButton>
-        </div>
+          <div className=" flex gap-4 max-w-xs  items-center justify-center w-3/4 xl:self-start xl:pl-12">
+            <LoginButton></LoginButton>
+            <SignupButton></SignupButton>
+          </div>
       </div>
       <div className="hidden xl:flex items-center xl:w-1/2 ">
         <img src={HeroCard} className="rounded-xl w-4/5 m-auto"></img>

@@ -1,12 +1,27 @@
 import React from "react";
-import { useState } from "react";
-import LoginButton from "../atoms/Buttons/LoginButton";
-import {Link} from "react-router-dom";
+import { useState, useEffect } from "react";
+import {Link, useNavigate} from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux/es/exports";
+
+
+
 const LoginForm = () => {
-  const [form, setForm] = useState({
+  const formInitialValue = {
     email: "",
     password: "",
-  });
+  }
+  const [form, setForm] = useState(formInitialValue);
+  const [error, setError] = useState();
+  const {currentUser} = useSelector((state)=> state.user)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  
+  
+  useEffect(()=> {
+      if (currentUser) {
+        navigate("/")
+      }
+  }, [currentUser, history])
 
   const handleChange = (e) => {
     setForm({
@@ -17,7 +32,7 @@ const LoginForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Formulario enviado");
+    setForm(formInitialValue)
   };
 
   return (
@@ -52,7 +67,7 @@ const LoginForm = () => {
             Forgot password?
             </Link>
         </p>
-        <LoginButton type="submit"></LoginButton>
+        <button type="submit" className="bg-p2 text-white text-lg p-2 rounded-md border-p2 border w-full font-semibold "  >Log in now</button>
         <p className="text-center">
           No account? 
           <Link to="/signup" className="text-p2 hover:underline ml-1">
