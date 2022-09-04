@@ -7,7 +7,7 @@ import useGetAllProducts from "../hooks/useGetAllProducts";
 const API = "https://api.escuelajs.co/api/v1/products";
 
 const ProductList = () => {
-  const dispatch = useDispatch();
+
   const products = useGetAllProducts(API)[0];
   const loading = useGetAllProducts(API)[1];
   console.log(products);
@@ -43,7 +43,7 @@ const ProductList = () => {
               <ProductItem
                 key={product.id}
                 data={product}
-                addToCart={() => dispatch(addToCart(product))}
+                
               ></ProductItem>
             );
           })}

@@ -11,12 +11,15 @@ import store from "../store";
 import PrivateRoute from "./PrivateRoute";
 
 const App = () => {
+
   return (
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
           <Route path="/store" element={<Store/>}></Route>
-          <Route path= "/userdetails" element={<UserDetails/>}></Route>
+          <Route element={<PrivateRoute/>}>
+            <Route path= "/userdetails" element={<UserDetails/>}></Route>
+          </Route>
           <Route path="/" element={<Home/>} ></Route>
           <Route path="/signup" element={<Signup />}></Route>
           <Route path="/login" element={<Login />}></Route>

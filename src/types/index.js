@@ -7,3 +7,20 @@ export const INCREMENT= "INCREMENT";
 export const DECREMENT= "DECREMENT";
 export const CLEAR_CART="CLEAR_CART";
 
+//AUTH ACTIONS
+
+//REGISTER
+export const REGISTER_START = "REGISTER_START";
+export const REGISTER_SUCESS = "REGISTER_SUCCES";
+export const REGISTER_FAIL = "REGISTER_FAIL"
+
+
+//LOGIN
+export const LOGIN_START = "LOGIN_START";
+export const LOGIN_SUCCESS = "LOGIN_SUCCES";
+export const LOGIN_FAIL = "LOGIN_FAIL";
+
+//LOGOUT
+export const LOGOUT_START = "LOGOUT_START";
+export const LOGOUT_SUCCESS = "LOGOUT_SUCCES";
+export const LOGOUT_FAIL = "LOGOUT_FAIL";

@@ -1,21 +1,31 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import SideMenuItem from "../components/SideMenuItem";
-import { useDispatch } from "react-redux";
-import {useNavigate} from "react-router-dom"
-import {Link} from "react-router-dom"
+import {  useDispatch, useSelector } from "react-redux";
+import { useNavigate, Link } from "react-router-dom";
+import { logoutFail, logoutStart, logoutSuccess } from "../actions/authActions";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase.config";
 
 
 const SideMenu = ({ toggle }) => {
+  const dispatch = useDispatch();
+  const {currentUser} = useSelector((state)=> state.auth)
+  const navigate = useNavigate()
+
+
   const Items = [
     { id: 1, name: "Home", path: "/" },
     { id: 2, name: "Store", path: "/Store" },
     { id: 3, name: "Contacto", path: "/Contacto" },
   ];
-  const dispatch = useDispatch();
-  const navigate = useNavigate()
-  const handleAuth = () => {
-      navigate("/")
+  
+  const handleAuth = () => {  
+    dispatch(logoutStart()); 
+    signOut(auth)
+      .then(() => dispatch(logoutSuccess()))
+      .then ( () => navigate("/login"))
+      .catch((error) => dispatch(logoutFail(error.message)));
   }
 
 
@@ -43,13 +53,15 @@ const SideMenu = ({ toggle }) => {
               );
             })}
             <br></br>
+            {currentUser && (
+              <>
                 <li>
                   <a href="" className="hover:text-p2">
                     My orders
                   </a>
                 </li>
                 <li>
-                <Link to="/userdetails" className="hover:text-p2">
+                  <Link to="/userdetails" className="hover:text-p2">
                     My account
                   </Link>
                 </li>
@@ -61,6 +73,8 @@ const SideMenu = ({ toggle }) => {
                     Sign out
                   </button>
                 </li>
+              </>
+            )}
           </ul>
         </motion.div>
       )}

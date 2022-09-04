@@ -17,28 +17,11 @@ const Navbar = () => {
   const [toggleUserMenu, setToggleUserMenu] = useState(false);
   const state = useSelector((state) => state);
   const { cart } = state.cart;
+  const {currentUser} = state.auth;
   console.log(toggleCart);
   // pasamos la funcion en la prop toggle de cartlist y en navtoggle para que en cada componente se pueda llamar de nuevo a la funcion y cambiar el valor del estado de cada uno
   // de esta forma podemos controlar el estado de una variable tanto en el hijo como en el padre
 
-
-
-  /*{currentUser ? (
-    <div className="relative">
-      <div
-        className="flex items-center bg-p2 border rounded-md text-white  p-2 hover:cursor-pointer"
-        onClick={() => setToggleUserMenu(!toggleUserMenu)}
-      >
-        {currentUser.email}
-        <TiArrowSortedDown />
-      </div>
-      {<UserMenuDropdown toggle={toggleUserMenu} />}
-    </div>
-  ) : (
-    <div className="min-w-100">
-    <LoginButton></LoginButton>
-    </div>
-  )}*/
   return (
     <div className="w-full flex fixed z-10 bg-white justify-between h-20 border-slate-300  text-lpink text-sm ">
       <NavToggle toggle={() => setToggleMenu(!toggleMenu)}></NavToggle>
@@ -65,6 +48,22 @@ const Navbar = () => {
       </div>
       <div className="flex  items-center pl-4 gap-2">
         <div className="hidden md:block">
+          {currentUser ? (
+            <div className="relative">
+              <div
+                className="flex items-center bg-p2 border rounded-md text-white  p-2 hover:cursor-pointer"
+                onClick={() => setToggleUserMenu(!toggleUserMenu)}
+              >
+                {currentUser.email}
+                <TiArrowSortedDown />
+              </div>
+              {<UserMenuDropdown toggle={toggleUserMenu} />}
+            </div>
+          ) : (
+            <div className="min-w-100">
+              <LoginButton></LoginButton>
+            </div>
+          )}
         </div>
         <div className="mr-4 hover:cursor-pointer">
           <img

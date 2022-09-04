@@ -1,16 +1,23 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import {useNavigate, Link} from "react-router-dom"
+import { logoutFail, logoutStart, logoutSuccess } from "../actions/authActions";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase.config";
 
 const UserMenuDropdown = ({toggle}) => {
-
-
+  
+    const dispatch = useDispatch();
     const navigate = useNavigate()
-    console.log(window.location)
     const handleAuth = () => {
-          navigate("/")
+      dispatch(logoutStart()); 
+      signOut(auth)
+        .then(() => dispatch(logoutSuccess()))
+        .then ( () => navigate("/login"))
+        .catch((error) => dispatch(logoutFail(error.message)));
     }
+
   return (
     <AnimatePresence>
       {toggle && ( //animationpresence debe ser el padre de lo q queremos renderizar segun un state

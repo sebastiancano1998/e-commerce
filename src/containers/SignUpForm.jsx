@@ -2,8 +2,11 @@ import React  from "react";
 import { useState } from "react";
 import CreateAccountButton from "../atoms/Buttons/CreateAccountButton";
 import { Link, useNavigate } from "react-router-dom";
-import { doc, setDoc, addDoc, collection } from "firebase/firestore";
-import { database } from "../firebase.config";
+import { doc, setDoc, addDoc, collection, updateDoc } from "firebase/firestore";
+import { auth, database } from "../firebase.config";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { useDispatch} from "react-redux";
+import { registerFail, registerStart, registerSuccess } from "../actions/authActions";
 
 
 const SignupForm = () => {
@@ -13,10 +16,10 @@ const SignupForm = () => {
     password: "",
     passwordConfirm: "",
   }
-  
+
+  const dispatch = useDispatch()
   const [form, setForm] = useState(formInitialValue);
   const navigate = useNavigate()
-  
   /*const handleChecked = (e) => {
     setForm({
       ...form,
@@ -32,15 +35,23 @@ const SignupForm = () => {
     });
   };
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (form.password !== form.passwordConfirm){
-      return;
-    }
-    await setDoc(doc(database, "users", form.name), form);
-    await addDoc(collection(database, "users"),form)
+    dispatch(registerStart());
+    await createUserWithEmailAndPassword(auth, form.email, form.password)
+      .then(async ({ user }) => {
+        updateProfile(user, {
+          displayName: form.name,
+        });
+        await setDoc(doc(database, "users", user.uid), form) //aca lo q hacemos es conectar mediante el uid los usuarios en auth y en firestore database
+        dispatch(registerSuccess(user));
+      })
+      .then (()=> navigate("/"))
+      .catch((error) => dispatch(registerFail(error.message)));
     setForm(formInitialValue)
   };
+
   return (
     <div className="flex flex-col rounded-xl sm:pt-24  items-center text-p5 w-11/12  max-w-sm p-2">
       <div className=" flex my-8  gap-2">

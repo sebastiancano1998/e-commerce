@@ -1,7 +1,11 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {Link, useNavigate} from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux/es/exports";
+import { useDispatch } from "react-redux/es/exports";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth, database } from "../firebase.config";
+import { loginFail, loginStart, loginSuccess } from "../actions/authActions";
+import { doc, getDoc } from "firebase/firestore";
 
 
 
@@ -12,16 +16,11 @@ const LoginForm = () => {
   }
   const [form, setForm] = useState(formInitialValue);
   const [error, setError] = useState();
-  const {currentUser} = useSelector((state)=> state.user)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   
-  
-  useEffect(()=> {
-      if (currentUser) {
-        navigate("/")
-      }
-  }, [currentUser, history])
+
+
 
   const handleChange = (e) => {
     setForm({
@@ -30,8 +29,25 @@ const LoginForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(()=> dispatch(loginStart())) 
+    await signInWithEmailAndPassword(auth, form.email, form.password)
+    .then(async ({ user }) => {
+      const userRef = doc(database, "users", user.uid)
+      const userSnap = await getDoc(userRef)
+      if (userSnap.exists()) {
+        console.log(userSnap.data().email)
+        dispatch(loginSuccess({...user, ...userSnap.data()}));
+      } else {
+        console.log("User not found")
+      }
+    })
+     
+    .then (()=> navigate("/"))
+    .catch((error) => dispatch(loginFail(error.message)));
     setForm(formInitialValue)
   };
 
