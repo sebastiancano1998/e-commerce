@@ -1,4 +1,4 @@
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import { addDoc, collection, getDocs, setDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import React from "react";
 import { useState, useEffect } from "react";
@@ -15,6 +15,7 @@ const UserDetails = () => {
     images: {},
     stock: 0,
   };
+  const [form, setForm] = useState(initialFormValue)
   const [categories, setCategories] = useState([]);
   useEffect(() => {
     async function getAllCategories() {
@@ -29,9 +30,8 @@ const UserDetails = () => {
   }, []);
   console.log(categories);
 
-  const [form, setForm] = useState(initialFormValue);
   const { currentUser } = useSelector((state) => state.auth);
-  const [uploadValue, setUploadValue] = useState(0);
+  const [progress, setProgress] = useState(0);
   const [picture, setPicture] = useState([]);
 
   const handleChange = (e) => {
@@ -55,7 +55,7 @@ const UserDetails = () => {
     setPicture(e.target.files[0]);
   };
 
-  async function uploadImagesAndData() {
+  function uploadImagesAndData() {
     const storageRef = ref(storage, `/images/${picture.name}`);
     const uploadTask = uploadBytesResumable(storageRef, picture);
 
@@ -67,7 +67,7 @@ const UserDetails = () => {
         );
 
         // update progress
-        setUploadValue(percent);
+        setProgress(percent);
       },
       (err) => console.log(err),
       () => {
@@ -75,7 +75,7 @@ const UserDetails = () => {
         getDownloadURL(uploadTask.snapshot.ref).then(async (url) => {
           const newProduct = await addDoc(collection(database, "products"), {
             ...form,
-            images: {url: url},
+            images: { url: url },
             price: Number(form.price),
             stock: Number(form.stock),
           });
@@ -85,9 +85,9 @@ const UserDetails = () => {
     );
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    await uploadImagesAndData();
+    uploadImagesAndData();
   };
 
   return (
@@ -158,8 +158,9 @@ const UserDetails = () => {
                 );
               })}
             </select>
-            <progress value={uploadValue}></progress>
-            <input type="file" onChange={handleFileUpload}></input>
+            <progress value={progress}></progress>
+            <input type="file" multiple onChange={handleFileUpload}></input>
+
             <button type="submit">Subir datos</button>
           </form>
         </div>
@@ -169,3 +170,65 @@ const UserDetails = () => {
 };
 
 export default UserDetails;
+
+/*
+  const { currentUser } = useSelector((state) => state.auth);
+  const [uploadValue, setUploadValue] = useState(0);
+  const [picture, setPicture] = useState([]);
+
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value, //agarra el estado anterior del objeto form y aumentale la siguiente propiedad
+    });
+  };
+  const handleSelect = (e) => {
+    const selectedIndex = e.target.options.selectedIndex;
+    setForm({
+      ...form,
+      category: {
+        id: e.target.options[selectedIndex].getAttribute("data"),
+        title: e.target.value,
+      },
+    });
+  };
+
+  const handleFileUpload = (e) => {
+    setPicture(e.target.files[0]);
+  };
+
+  async function uploadImagesAndData() {
+    const storageRef = ref(storage, `/images/${picture.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, picture);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const percent = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+
+        // update progress
+        setUploadValue(percent);
+      },
+      (err) => console.log(err),
+      () => {
+        // download url
+        getDownloadURL(uploadTask.snapshot.ref).then(async (url) => {
+          const newProduct = await addDoc(collection(database, "products"), {
+            ...form,
+            images: {url: url},
+            price: Number(form.price),
+            stock: Number(form.stock),
+          });
+          console.log(newProduct.id);
+        });
+      }
+    );
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await uploadImagesAndData();
+  };
+  */
