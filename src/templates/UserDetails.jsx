@@ -1,10 +1,5 @@
-import { collection, getDocs } from "firebase/firestore";
-import {
-  getDownloadURL,
-  ref,
-  uploadBytes,
-  uploadBytesResumable,
-} from "firebase/storage";
+import { addDoc, collection, getDocs } from "firebase/firestore";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import React from "react";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -14,77 +9,87 @@ import { database, storage } from "../firebase.config";
 const UserDetails = () => {
   const initialFormValue = {
     name: "",
-    price:  undefined,
-    category: undefined,
+    price: 0,
+    category: {},
     description: "",
-    images: [],
-    stock: undefined,
-  }
-  const [categories, setCategories] = useState([])
+    images: {},
+    stock: 0,
+  };
+  const [categories, setCategories] = useState([]);
   useEffect(() => {
     async function getAllCategories() {
       const snapshot = await getDocs(collection(database, "category"));
-      snapshot.docs.forEach((doc)=>{
-        setCategories((prev)=>{
-          return [...prev,{id: doc.id, title: doc.data().title}]; //aca almacenamos todas los docs en el estado categorias
-        })
-      })
+      snapshot.docs.forEach((doc) => {
+        setCategories((prev) => {
+          return [...prev, { id: doc.id, title: doc.data().title }]; //aca almacenamos todas los docs en el estado categorias
+        });
+      });
     }
-    getAllCategories()
-  }, [])
-  console.log(categories)
+    getAllCategories();
+  }, []);
+  console.log(categories);
 
-  const [form, setForm] = useState(initialFormValue)
+  const [form, setForm] = useState(initialFormValue);
   const { currentUser } = useSelector((state) => state.auth);
   const [uploadValue, setUploadValue] = useState(0);
-  const [picture, setPicture] = useState("");
-  console.log(form)
+  const [picture, setPicture] = useState([]);
+
   const handleChange = (e) => {
-    const [id, title] = e.target.value.split("/")
     setForm({
       ...form,
-      [e.target.name]: e.target.value, //agarra el estado anterior del objeto form y aumentale la siguiente propiedad 
-      category: {id,title}
-  })}
+      [e.target.name]: e.target.value, //agarra el estado anterior del objeto form y aumentale la siguiente propiedad
+    });
+  };
+  const handleSelect = (e) => {
+    const selectedIndex = e.target.options.selectedIndex;
+    setForm({
+      ...form,
+      category: {
+        id: e.target.options[selectedIndex].getAttribute("data"),
+        title: e.target.value,
+      },
+    });
+  };
 
+  const handleFileUpload = (e) => {
+    setPicture(e.target.files[0]);
+  };
 
-  const handleUpload = (e) => {
-    const file = e.target.files[0];
-    const storageRef = ref(storage, `images/${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
+  async function uploadImagesAndData() {
+    const storageRef = ref(storage, `/images/${picture.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, picture);
+
     uploadTask.on(
       "state_changed",
       (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setUploadValue(progress);
-        console.log("Upload is" + progress + "% done");
-        switch (snapshot.state) {
-          case "paused":
-            console.log("Upload is paused");
-            break;
-          case "running":
-            console.log("Upload is running");
-            break;
-        }
+        const percent = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+
+        // update progress
+        setUploadValue(percent);
       },
-      (error) => {
-        switch (error.code) {
-          case "storage/unauthorized":
-            break;
-          case "storage/canceled":
-            break;
-        }
-      },
+      (err) => console.log(err),
       () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => [
-          console.log("File at", downloadURL),
-          setUploadValue(100),
-          setPicture(downloadURL),
-        ]);
+        // download url
+        getDownloadURL(uploadTask.snapshot.ref).then(async (url) => {
+          const newProduct = await addDoc(collection(database, "products"), {
+            ...form,
+            images: {url: url},
+            price: Number(form.price),
+            stock: Number(form.stock),
+          });
+          console.log(newProduct.id);
+        });
       }
     );
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await uploadImagesAndData();
   };
+
   return (
     <>
       <Navbar></Navbar>
@@ -103,7 +108,7 @@ const UserDetails = () => {
         </p>
         <div>
           <h1>Agregar producto</h1>
-          <form>
+          <form onSubmit={handleSubmit}>
             <input
               type="text"
               id="name"
@@ -139,17 +144,23 @@ const UserDetails = () => {
               onChange={handleChange}
               placeholder="Stock"
             ></input>
-            <select name="category" onChange={handleChange}>
+            <select name="category" onChange={handleSelect}>
               <option value="">---</option>
-              {categories.map((category)=>{
+              {categories.map((category) => {
                 return (
-                   <option key={category.id} value={`${category.id}/${category.title}`}>{category.title}</option>
-                )
+                  <option
+                    key={category.id}
+                    data={category.id}
+                    value={category.title}
+                  >
+                    {category.title}
+                  </option>
+                );
               })}
             </select>
             <progress value={uploadValue}></progress>
-            <input type="file" onChange={handleUpload}></input>
-            <img className="w-80" alt="image-test-upload" src={picture}></img>
+            <input type="file" onChange={handleFileUpload}></input>
+            <button type="submit">Subir datos</button>
           </form>
         </div>
       </div>
