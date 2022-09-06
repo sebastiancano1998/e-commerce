@@ -1,10 +1,11 @@
-import { addDoc, collection, getDocs, setDoc } from "firebase/firestore";
+import { addDoc, collection, getDocs } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import React from "react";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Navbar from "../containers/Navbar";
 import { database, storage } from "../firebase.config";
+
 
 const UserDetails = () => {
   const initialFormValue = {
@@ -15,7 +16,7 @@ const UserDetails = () => {
     images: {},
     stock: 0,
   };
-  const [form, setForm] = useState(initialFormValue)
+
   const [categories, setCategories] = useState([]);
   useEffect(() => {
     async function getAllCategories() {
@@ -30,16 +31,13 @@ const UserDetails = () => {
   }, []);
   console.log(categories);
 
-  const { currentUser } = useSelector((state) => state.auth);
-  const [progress, setProgress] = useState(0);
-  const [picture, setPicture] = useState([]);
-
   const handleChange = (e) => {
     setForm({
       ...form,
       [e.target.name]: e.target.value, //agarra el estado anterior del objeto form y aumentale la siguiente propiedad
     });
   };
+
   const handleSelect = (e) => {
     const selectedIndex = e.target.options.selectedIndex;
     setForm({
@@ -51,45 +49,67 @@ const UserDetails = () => {
     });
   };
 
+  const { currentUser } = useSelector((state) => state.auth);
+  const [form, setForm] = useState(initialFormValue);
+  const [images, setImages] = useState("");
+  const [progress, setProgress] = useState(0);
+
   const handleFileUpload = (e) => {
-    setPicture(e.target.files[0]);
-  };
+    for (let i = 0; i < e.target.files.length; i++) {
+      const newImage = e.target.files[i];
+      setImages((prevState) => [...prevState, newImage]);
+    }/*
+    setImage(
+      e.target.files[0]
+    )*/
+  }; 
 
-  function uploadImagesAndData() {
-    const storageRef = ref(storage, `/images/${picture.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, picture);
-
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const percent = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-
-        // update progress
-        setProgress(percent);
-      },
-      (err) => console.log(err),
-      () => {
-        // download url
-        getDownloadURL(uploadTask.snapshot.ref).then(async (url) => {
-          const newProduct = await addDoc(collection(database, "products"), {
-            ...form,
-            images: { url: url },
-            price: Number(form.price),
-            stock: Number(form.stock),
-          });
-          console.log(newProduct.id);
+  function uploadImagesandData() {
+    const promises = images.map((image)=>{ //encapsulamos nuestro map en la constante promises que guardara el valor del resolve
+      return new Promise((resolve, reject) => {
+        const storageRef = ref(storage, `/images/${image.name}`);
+        const uploadTask = uploadBytesResumable(storageRef, image);
+            uploadTask.on(
+              "state_changed",
+              (snapshot) => {
+                const percent = Math.round(
+                  (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                );
+    
+                // update progress
+                setProgress(percent);
+              },
+              (error) => {
+                console.log(error)
+                reject(error)
+              },
+               () => {
+                // download url
+                getDownloadURL(uploadTask.snapshot.ref)
+                   .then((downloadURL) => {
+                  console.log('File available at', downloadURL);
+                  resolve(downloadURL)
+                })
+              }
+            );
         });
-      }
-    );
+    })
+    Promise.all(promises).then ( async (values)=>{ //imprimimos en consola el valor de las promesas con promise.all
+      console.log(values)
+      const docRef = await addDoc(collection(database, "products"),{ //luego de obtener el array de resultados, lo usamos para crear un documento nuevo
+        ...form,
+        images: values,
+      })
+      console.log(docRef.id)
+    })
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    uploadImagesAndData();
-  };
 
+  const handleSubmit =  (e)=>{
+    e.preventDefault()
+    uploadImagesandData()
+
+  }
   return (
     <>
       <Navbar></Navbar>
@@ -170,65 +190,3 @@ const UserDetails = () => {
 };
 
 export default UserDetails;
-
-/*
-  const { currentUser } = useSelector((state) => state.auth);
-  const [uploadValue, setUploadValue] = useState(0);
-  const [picture, setPicture] = useState([]);
-
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value, //agarra el estado anterior del objeto form y aumentale la siguiente propiedad
-    });
-  };
-  const handleSelect = (e) => {
-    const selectedIndex = e.target.options.selectedIndex;
-    setForm({
-      ...form,
-      category: {
-        id: e.target.options[selectedIndex].getAttribute("data"),
-        title: e.target.value,
-      },
-    });
-  };
-
-  const handleFileUpload = (e) => {
-    setPicture(e.target.files[0]);
-  };
-
-  async function uploadImagesAndData() {
-    const storageRef = ref(storage, `/images/${picture.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, picture);
-
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const percent = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-
-        // update progress
-        setUploadValue(percent);
-      },
-      (err) => console.log(err),
-      () => {
-        // download url
-        getDownloadURL(uploadTask.snapshot.ref).then(async (url) => {
-          const newProduct = await addDoc(collection(database, "products"), {
-            ...form,
-            images: {url: url},
-            price: Number(form.price),
-            stock: Number(form.stock),
-          });
-          console.log(newProduct.id);
-        });
-      }
-    );
-  }
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    await uploadImagesAndData();
-  };
-  */
