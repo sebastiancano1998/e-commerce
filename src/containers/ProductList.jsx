@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../actions/cartActions";
 import useGetAllProducts from "../hooks/useGetAllProducts";
 
-const API = "https://api.escuelajs.co/api/v1/products";
+
 
 const ProductList = () => {
 
-  const products = useGetAllProducts(API)[0];
-  const loading = useGetAllProducts(API)[1];
+  const products = useGetAllProducts()[0];
+  const loading = useGetAllProducts()[1];
   console.log(products);
   /*const [state, dispatch] = useReducer(cartReducer, cartInitialState);
   const { products, cart } = state;
@@ -30,7 +30,7 @@ const ProductList = () => {
     dispatch({type: TYPES.DECREMENT, payload: [value,id]})
   };*/
   return (
-    <div className=" w-11/12 m-auto ">
+    <div className=" w-11/12 m-auto my-4 ">
       <p className="text-p2 font-semibold text-3xl text-center my-4">
         Products
       </p>

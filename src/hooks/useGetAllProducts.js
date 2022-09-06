@@ -1,19 +1,24 @@
+import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { database } from "../firebase.config";
 
-const useGetAllProducts= (API) => {
-  const [categories, setCategories] = useState([]);
+
+const useGetAllProducts= () => {
+  const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-    async function fetchCategories() {
-      const response = await axios(API);
-      setCategories(response.data);
-      setIsLoading(false);
-      console.log(response.data);
+    async function getAllProducts() {
+      const querySnapshot = await getDocs(collection(database,"products"));
+      querySnapshot.forEach((doc)=>{
+        setProducts((prev)=>{
+          return [...prev, doc.data()]
+        })
+      });
+      setIsLoading(false)
     }
-    fetchCategories();
+    getAllProducts();
   }, []);
-  return [categories, isLoading];
+  return [products, isLoading];
 };
 
 export default useGetAllProducts;

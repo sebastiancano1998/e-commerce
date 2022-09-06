@@ -9,18 +9,24 @@ import {
 } from "../actions/cartActions";
 
 const CartItem = ({ data }) => {
-  let { id, title, price, images, cantidad } = data;
+  let { id, name, price, images, cantidad } = data;
 
   const dispatch = useDispatch();
 
   return (
     <div className="flex flex-col text-xs border-b first:border-t">
       <div className="w-full flex gap-4 items-center pt-5">
-        <div className="w-1/2 ml-4">
-          <img src={images[0]} alt={title} className="rounded-xl"></img>
+      <div className="flex justify-center w-1/2 pl-4">
+        <div className="h-32 w-32">
+          <img
+            src={images[0]}
+            alt={name}
+            className="w-full h-full object-contain"
+          ></img>
         </div>
+      </div>
         <div className="w-1/2">
-          <p>{title}</p>
+          <p>{name}</p>
           <p className="font-semibold mt-2">Price: ${price.toFixed(2)}</p>
         </div>
       </div>
