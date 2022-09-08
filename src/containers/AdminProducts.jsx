@@ -7,7 +7,6 @@ import useGetAllProducts from "../hooks/useGetAllProducts";
 const AdminProducts = () => {
   const products = useGetAllProducts()[0];
   const isLoading = useGetAllProducts()[1];
-  const [toggleAddProduct, setToggleAddProduct] = useState(false)
   console.log(products);
   return isLoading ? (
     <p>Loading...</p>
@@ -18,11 +17,10 @@ const AdminProducts = () => {
         <table className="bg-white rounded-md overflow-hidden text-sm">
           <thead className=" bg-adminside text-white">
             <tr className="text-sm">
-              <th className="py-4 px-8 uppercase">Nombre</th>
-              <th className="py-4 px-8 uppercase">Precio</th>
-              <th className="py-4 px-8 uppercase">Stock</th>
-              <th className="py-4 px-8 uppercase">Categoria</th>
-              <th className="py-4 px-8 uppercase">Acciones</th>
+              <th className="p-4 uppercase">Nombre</th>
+              <th className="p-4 uppercase">Precio</th>
+              <th className="p-4 uppercase">Stock</th>
+              <th className="p-4 uppercase">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -33,10 +31,11 @@ const AdminProducts = () => {
             })}
           </tbody>
         </table>
-        <button className=" self-end rounded-md p-2 bg-green-600 text-sm text-white mt-4" onClick={()=> setToggleAddProduct(!toggleAddProduct)}>
-          + Agregar producto
-        </button>
-        {toggleAddProduct&& <AdminProductsForm/>}
+        <div>
+          <p className="text-3xl my-6 font-semibold">Agregar un producto</p>
+          <AdminProductsForm/>
+        </div>
+        
       </div>
     </div>
   );

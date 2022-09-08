@@ -109,10 +109,8 @@ const AdminProductsForm = () => {
   console.log(images);
   //<progress className="self-center" value={progress}></progress>
   return (
-    <div className=" fixed p-4 self-center rounded-xl bg-white border  h-max w-96 text-adminside">
-      <div>
-        <h1>Agregar un producto</h1>
-        <form onSubmit={handleSubmit} className="flex flex-col">
+    <div className="p-4 mt-6 w-full self-center rounded-xl bg-white border  h-max  text-adminside">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-2">
           <label htmlFor="name" >Nombre</label>
           <input
             type="text"
@@ -121,18 +119,9 @@ const AdminProductsForm = () => {
             value={form.name}
             onChange={handleChange}
             placeholder="Product name"
-            className="border rounded-md h-8 p-2  w-full "
+            className=" focus:border-b-2 focus:border-b-adminside h-8   w-full  outline-none"
           ></input>
-          <label htmlFor="price">Cantidad</label>
-          <input
-            type="number"
-            id="price"
-            name="price"
-            value={form.price}
-            onChange={handleChange}
-            placeholder="Price"
-            className=""
-          ></input>
+          <label htmlFor="description">Descripcion</label>
           <input
             type="text"
             id="description"
@@ -142,6 +131,17 @@ const AdminProductsForm = () => {
             placeholder="Description"
             className="border rounded-md h-20 p-2 w-full  "
           ></input>
+          <label htmlFor="price">Precio</label>
+          <input
+            type="number"
+            id="price"
+            name="price"
+            value={form.price}
+            onChange={handleChange}
+            placeholder="Price"
+            className="w-28"
+          ></input>
+          
           <label htmlFor="stock">Stock</label>
           <input
             type="number"
@@ -150,8 +150,10 @@ const AdminProductsForm = () => {
             value={form.stock}
             onChange={handleChange}
             placeholder="Stock"
+            className="w-28"
           ></input>
-          <select name="category" onChange={handleSelect}>
+           <label htmlFor="category">Categoria</label>
+          <select name="category" id="category" onChange={handleSelect}>
             <option value="" defaultValue="">
               ---
             </option>
@@ -167,6 +169,8 @@ const AdminProductsForm = () => {
               );
             })}
           </select>
+          <div className="flex justify-between">
+          <p>Subir imagenes</p>
           <label
             for="file"
             id="file-label"
@@ -182,7 +186,7 @@ const AdminProductsForm = () => {
             multiple
             onChange={handleFileUpload}
           ></input>
-
+          </div>
           {images.length > 0 ? (
             <div className="my-8">
               <div className="flex justify-between mb-2">
@@ -220,7 +224,6 @@ const AdminProductsForm = () => {
           </button>
         </form>
       </div>
-    </div>
   );
 };
 
