@@ -5,7 +5,6 @@ import Navbar from '../containers/Navbar'
 import Hero from '../containers/Hero'
 import TypeProducts from '../containers/TypeProducts'
 import TimeLine from '../containers/TimeLine'
-import { useSelector } from 'react-redux'
 
 const Home = () => {
 

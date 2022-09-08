@@ -19,7 +19,8 @@ module.exports = {
         "p5": "rgba(0, 0, 0, .6)",
         "p6": "#0B4E4A",
         "darkest": "rgba(0, 0, 0, .7)",
-        "input": "rgb(52 52 52)"
+        "input": "rgb(52 52 52)",
+        "adminside": "#111827"
       },
       fontSize: {
         "medium": "1.50rem",
@@ -40,9 +41,13 @@ module.exports = {
       },
       width: {
         "0.2":"0.2rem",
+        
       },
       zIndex: {
         "1": "1",
+      },
+      maxHeight:{
+        "100": "100px",
       },
       maxWidth: {
         "150": "150px",
