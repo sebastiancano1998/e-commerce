@@ -43,6 +43,10 @@ module.exports = {
         "0.2":"0.2rem",
         
       },
+      transitionDuration: {
+        '400': "400ms",
+        '600':"600ms"
+      },
       zIndex: {
         "1": "1",
       },

@@ -9,7 +9,7 @@ const handleToggle = () =>{
 
 
   return (
-    <div className="w-full h-20  items-center flex justify-between bg-white fixed top-0 left-0 right-0 shadow-md">
+    <div className="w-full h-20  items-center flex justify-between z-30 bg-white fixed top-0 left-0 right-0 shadow-md">
         <img   className="hover:cursor-pointer ml-5" onClick={()=> handleToggle()} src={toggle}></img>
       <div className="flex items-center gap-2 mr-5">
         <div>
