@@ -11,6 +11,7 @@ import PrivateRoute from "./PrivateRoute";
 import Admin from "../templates/Admin";
 import AdminDashBoard from "../containers/AdminDashBoard";
 import AdminProducts from "../containers/AdminProducts";
+import AdminProductsForm from "../components/AdminProductsForm";
 
 const App = () => {
 
@@ -26,6 +27,7 @@ const App = () => {
           <Route path="admin" element={<Admin/>}>
              <Route path="productos" element={<AdminProducts/>} ></Route>
              <Route path="dashboard" element={<AdminDashBoard/>}></Route>
+             <Route path="addproducts" element={<AdminProductsForm/>}></Route>
           </Route> 
           <Route path="signup" element={<Signup />}></Route>
           <Route path="login" element={<Login />}></Route>

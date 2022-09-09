@@ -12,7 +12,7 @@ const Admin = () => {
       <div className={toggleSide? " fixed translate-x-0 duration-500 ": "fixed -translate-x-80  duration-700"}>
       <AdminSideMenu   />
       </div>
-      <div className={toggleSide? "mt-20 translate-x-80 duration-500 ": "mt-20 -translate-x-0  duration-700"}>
+      <div className={toggleSide? "mt-20 mx-8 translate-x-80 duration-500 ": "mt-20 mx-8  -translate-x-0  duration-700"}>
         <Outlet/>
       </div>
     </div>

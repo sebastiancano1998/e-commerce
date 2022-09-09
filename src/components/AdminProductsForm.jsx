@@ -172,7 +172,7 @@ const AdminProductsForm = () => {
           <div className="flex justify-between">
           <p>Subir imagenes</p>
           <label
-            for="file"
+            htmlFor="file"
             id="file-label"
             className="bg-adminside text-sm self-center flex items-center justify-center text-center hover:cursor-pointer text-white rounded-lg w-36 h-8"
           >
