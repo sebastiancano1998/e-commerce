@@ -6,22 +6,27 @@ import { database } from "../firebase.config";
 import useGetAllProducts from "../hooks/useGetAllProducts";
 
 const AdminProductsTable = () => {
-    
-  const products = useGetAllProducts()[0]
-  const isLoading = useGetAllProducts()[1]
-  const [myProducts, setMyProducts] = useState([])
 
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  
   useEffect(() => {
-    function setProducts() {
-        setMyProducts(products)
+    async function getAllProducts() {
+      const querySnapshot = await getDocs(collection(database, "products"));
+      querySnapshot.forEach((doc) => {
+        setProducts((prev) => {
+          return [...prev, doc.data()];
+        });
+      });
+      setIsLoading(false);
     }
-    setProducts()
-  }, [products]) //ahora que products cambio llama al useEffect de nuevo
-  console.log(myProducts)
+    getAllProducts();
+  }, []);
 
+  console.log(products)
   const update = (id) =>{
     const updateProducts = products.filter((product)=> product.id !== id)
-    setMyProducts(updateProducts)
+    setProducts(updateProducts)
   } 
   return (
     <>
@@ -40,7 +45,7 @@ const AdminProductsTable = () => {
               </tr>
             </thead>
             <tbody>
-              {myProducts.map((data, index) => {
+              {products.map((data, index) => {
                 return (
                   <AdminProductItem
                     key={data.id}
